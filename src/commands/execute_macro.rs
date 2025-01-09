@@ -6,13 +6,8 @@ use poise::serenity_prelude::{
 
 use crate::{database::Database, params::ParameterizedString};
 
-pub async fn execute_macro(
-    ctx: &Context,
-    message: &Message,
-    content: String,
-    database: &Database,
-) -> Result<()> {
-    let command = &content.split(" ").next().unwrap()[1..];
+pub async fn execute_macro(ctx: &Context, message: &Message, database: &Database) -> Result<()> {
+    let command = &message.content.split(" ").next().unwrap()[1..];
 
     let Some((r#macro, attachments)) = database.get_macro(command)? else {
         return Ok(()); // Ignore if macro doesn't exist

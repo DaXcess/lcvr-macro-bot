@@ -61,25 +61,25 @@ impl Database {
 
     pub fn create_macro(
         &self,
-        name: String,
-        description: String,
-        content: String,
-        attachments: Vec<String>,
+        name: &str,
+        description: &str,
+        content: &str,
+        attachments: &[String],
     ) -> Result<()> {
         let mut conn = self.pool.get()?;
 
         conn.transaction::<(), diesel::result::Error, _>(|conn| {
             let r#macro = diesel::insert_into(macro_::table)
                 .values(&NewMacro {
-                    name: &name,
-                    description: &description,
-                    content: &content,
+                    name,
+                    description,
+                    content,
                 })
                 .on_conflict(macro_::name)
                 .do_update()
                 .set((
-                    macro_::description.eq(&description),
-                    macro_::content.eq(&content),
+                    macro_::description.eq(description),
+                    macro_::content.eq(content),
                 ))
                 .returning(Macro::as_returning())
                 .get_result(conn)?;

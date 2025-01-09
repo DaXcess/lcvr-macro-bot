@@ -83,12 +83,11 @@ async fn event_handler(
             return Ok(());
         }
 
-        let content = message.content_safe(&ctx.cache);
-        if !content.starts_with(".") {
+        if !message.content.starts_with(".") {
             return Ok(());
         }
 
-        if let Err(why) = commands::execute_macro(ctx, message, content, database).await {
+        if let Err(why) = commands::execute_macro(ctx, message, database).await {
             error!("Error on macro invocation: {why}");
         }
     }

@@ -1,4 +1,4 @@
-use crate::{database::Database, params::ParameterizedString, Context};
+use crate::{params::ParameterizedString, Context};
 use anyhow::{anyhow, Result};
 use log::info;
 use poise::{
@@ -105,14 +105,8 @@ pub async fn add_macro(
         .map(|att| att.url)
         .collect::<Vec<_>>();
 
-    create_macro(
-        ctx.data.clone(),
-        name.clone(),
-        description,
-        content,
-        attachments,
-    )
-    .await?;
+    ctx.data
+        .create_macro(&name, &description, &content, &attachments)?;
 
     ctx.send(
         CreateReply::default()
@@ -128,15 +122,4 @@ pub async fn add_macro(
     info!("Macro .{name} has been created");
 
     Ok(())
-}
-
-async fn create_macro(
-    db: Database,
-    name: String,
-    description: String,
-    content: String,
-    attachments: Vec<String>,
-) -> Result<()> {
-    tokio::task::spawn_blocking(move || db.create_macro(name, description, content, attachments))
-        .await?
 }
