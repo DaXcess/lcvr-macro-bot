@@ -47,7 +47,7 @@ impl<'a> ParameterizedString<'a> {
                         min = min.min(number);
                         max = max.max(number);
                     }
-                    Err(_) => return Err(anyhow!("Invalid parameter: {number_str}")),
+                    Err(_) => {}
                 }
 
                 start = end_index + 1;
