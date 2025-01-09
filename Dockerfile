@@ -16,4 +16,8 @@ FROM debian:bookworm-slim
 
 COPY --from=builder /app/target/release/lcvr-macros /usr/local/bin/lcvr-macros
 
+# Add extra runtime dependencies here
+RUN apt-get update && apt install -yqq \
+    libsqlite3-0
+
 ENTRYPOINT [ "/usr/local/bin/lcvr-macros" ]

@@ -15,7 +15,7 @@ use poise::{
 #[poise::command(slash_command)]
 pub async fn macros(ctx: Context<'_>) -> Result<()> {
     let macros = ctx.data.get_macros()?;
-    let pages = macros.chunks(25).len();
+    let pages = macros.chunks(25).len().max(1);
 
     let ctx_id = ctx.id();
     let prev_button_id = format!("{ctx_id}prev");
@@ -90,16 +90,20 @@ fn create_macro_embed(macros: &[Macro], page: usize) -> CreateEmbed {
         .footer(CreateEmbedFooter::new(format!(
             "Page {}/{}",
             page + 1,
-            chunks.len()
+            chunks.len().max(1)
         )))
         .color(0x0773D6);
 
-    for r#macro in macros
-        .chunks(25)
-        .nth(page)
-        .expect("Page exceeds max page count")
-    {
-        embed = embed.field(&r#macro.name, &r#macro.description, false);
+    if macros.is_empty() {
+        embed = embed.description("You haven't created any macros yet");
+    } else {
+        for r#macro in macros
+            .chunks(25)
+            .nth(page)
+            .expect("Page exceeds max page count")
+        {
+            embed = embed.field(&r#macro.name, &r#macro.description, false);
+        }
     }
 
     embed
