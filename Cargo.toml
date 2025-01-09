@@ -1,0 +1,24 @@
+[package]
+name = "lcvr-macros"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1.0.95"
+diesel = { version = "2.2.6", features = [
+    "r2d2",
+    "sqlite",
+    "returning_clauses_for_sqlite_3_35",
+] }
+diesel_migrations = { version = "2.2.0" }
+dotenvy = "0.15.7"
+env_logger = "0.11.6"
+indexmap = "2.7.0"
+log = "0.4.22"
+poise = "0.6.1"
+thiserror = "2.0.9"
+tokio = { version = "1.42.0", features = ["macros", "rt-multi-thread", "signal"] }
+
+[package.metadata.vcpkg]
+git = "https://github.com/microsoft/vcpkg"
+branch = "master"
