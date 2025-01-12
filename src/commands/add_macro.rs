@@ -105,8 +105,14 @@ pub async fn add_macro(
         .map(|att| att.url)
         .collect::<Vec<_>>();
 
-    ctx.data
-        .create_macro(&name, &description, &content, &attachments)?;
+    ctx.data.create_macro(
+        &name,
+        &description,
+        &msg.channel_id.to_string(),
+        &msg.id.to_string(),
+        &content,
+        &attachments,
+    )?;
 
     ctx.send(
         CreateReply::default()

@@ -63,6 +63,8 @@ impl Database {
         &self,
         name: &str,
         description: &str,
+        channel_id: &str,
+        message_id: &str,
         content: &str,
         attachments: &[String],
     ) -> Result<()> {
@@ -73,12 +75,16 @@ impl Database {
                 .values(&NewMacro {
                     name,
                     description,
+                    channel_id,
+                    message_id,
                     content,
                 })
                 .on_conflict(macro_::name)
                 .do_update()
                 .set((
                     macro_::description.eq(description),
+                    macro_::channel_id.eq(channel_id),
+                    macro_::message_id.eq(message_id),
                     macro_::content.eq(content),
                 ))
                 .returning(Macro::as_returning())

@@ -14,6 +14,8 @@ diesel::table! {
         id -> Integer,
         name -> Text,
         description -> Text,
+        channel_id -> Text,
+        message_id -> Text,
         content -> Text,
     }
 }

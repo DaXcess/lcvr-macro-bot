@@ -9,6 +9,8 @@ pub struct Macro {
     pub id: i32,
     pub name: String,
     pub description: String,
+    pub channel_id: String,
+    pub message_id: String,
     pub content: String,
 }
 
@@ -28,6 +30,8 @@ pub struct Attachment {
 pub struct NewMacro<'a> {
     pub name: &'a str,
     pub description: &'a str,
+    pub channel_id: &'a str,
+    pub message_id: &'a str,
     pub content: &'a str,
 }
 

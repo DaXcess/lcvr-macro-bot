@@ -4,6 +4,8 @@ CREATE TABLE
         id INTEGER PRIMARY KEY NOT NULL,
         name VARCHAR(32) NOT NULL UNIQUE,
         description VARCHAR(250) NOT NULL,
+        channel_id VARCHAR(32) NOT NULL,
+        message_id VARCHAR(32) NOT NULL,
         content TEXT NOT NULL
     );
 
